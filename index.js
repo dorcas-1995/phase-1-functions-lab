@@ -1,27 +1,42 @@
-function distanceFromHqInBlocks(someValue) {
-  const initialPoint = 42
-  const ReturnVal = Math.abs(someValue - initialPoint);
-  return ReturnVal;
-}
+// Code your solution in this file!
 
+const hq = 42;
+const distanceFromHqInBlocks = (pickUpLocation) => {
+  // if (pickUpLocation < 42) {
+  //   return hq - pickUpLocation
+  // } else {
+  //   return pickUpLocation - 42
+  // }
+  return pickUpLocation > 42 ? pickUpLocation - 42 : hq - pickUpLocation;
+};
 
-function distanceFromHqInFeet(someValue) {
- const initialPoint = 42;
- const ReturnVal = Math.abs(someValue-initialPoint) * 264;
+const distanceFromHqInFeet = (pickUpLocation) => {
+  return distanceFromHqInBlocks(pickUpLocation) * 264;
+};
 
- return ReturnVal;
-}
+const distanceTravelledInFeet = (start, destination) => {
+  return destination > start
+    ? (destination - start) * 264
+    : (start - destination) * 264;
+};
 
- function distanceTravelledInFeet(start, destination) {  
-       return Math.abs((destination - start) * 264);
- }
+const calculatesFarePrice = (start, destination) => {
+  let charges;
 
-  function calculatesFarePrice(start, destination) {
-    let distance  = destination-start *264;
-
-    if(distance < 400){
-        return "cannot travel that far";
-    }else if(distance-400 > 0 && distance < 2000){
-     return (distance-400) * 2;
-    }
+  if (distanceTravelledInFeet(start, destination) < 400) {
+    return 0;
+  } else if (
+    distanceTravelledInFeet(start, destination) >= 400 &&
+    distanceTravelledInFeet(start, destination) <= 2000
+  ) {
+    charges = (distanceTravelledInFeet(start, destination) - 400) * 0.02;
+  } else if (
+    distanceTravelledInFeet(start, destination) > 2000 &&
+    distanceTravelledInFeet(start, destination) <= 2500
+  ) {
+    charges = 25;
+  } else {
+    return "cannot travel that far";
   }
+  return charges;
+};
